@@ -1,3 +1,4 @@
+// ========== Playlist with Circular Linked List ==========
 class Node {
   constructor(song) {
     this.song = song;
@@ -60,18 +61,51 @@ function addSong() {
   }
 }
 
-function analyzeMood() {
-  const moodInput = document.getElementById('moodInput').value.toLowerCase();
-  const suggestion = document.getElementById('suggestion');
-  let result = '';
-  if (moodInput.includes('happy')) {
-    result = 'Suggested Playlist: Happy Vibes ✨\n1. Walking on Sunshine\n2. Can’t Stop the Feeling!';
-  } else if (moodInput.includes('sad')) {
-    result = 'Suggested Playlist: Chill & Calm 🌧\n1. Someone Like You\n2. Fix You';
-  } else if (moodInput.includes('study') || moodInput.includes('focus')) {
-    result = 'Suggested Playlist: Focus Flow 📚\n1. Lofi Beats\n2. Study Chill';
-  } else {
-    result = 'No playlist matched your mood. Try: happy, sad, or study.';
-  }
-  suggestion.innerText = result;
+// ========== Chatbot Logic ==========
+function addMessageToChat(role, text) {
+  const chat = document.getElementById('chatlog');
+  const div = document.createElement('div');
+  div.className = role === 'user' ? 'user-msg' : 'bot-msg';
+  div.innerText = text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
 }
+
+function handleChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  addMessageToChat('user', msg);
+  input.value = '';
+
+  const mood = msg.toLowerCase();
+  let response = '';
+
+  if (mood.includes('happy')) {
+    response = '🎶 Playlist: Happy Vibes\n1. Walking on Sunshine\n2. Can’t Stop the Feeling!';
+  } else if (mood.includes('sad')) {
+    response = '🌧 Playlist: Chill Moods\n1. Someone Like You\n2. Fix You';
+  } else if (mood.includes('study') || mood.includes('focus')) {
+    response = '📚 Playlist: Focus Flow\n1. Lofi Beats\n2. Study Chill';
+  } else {
+    response = '🤖 Try: "I feel happy", "I feel sad", or "I want to study".';
+  }
+
+  addMessageToChat('bot', response);
+}
+
+// ========== Chatbot Show/Hide ==========
+function toggleChatbot() {
+  const widget = document.getElementById('chatbot-widget');
+  widget.classList.toggle('active');
+}
+
+// ========== Event Listeners ==========
+window.onload = () => {
+  document.getElementById('addSongBtn').addEventListener('click', addSong);
+  document.getElementById('chatSendBtn').addEventListener('click', handleChat);
+  document.getElementById('chatbot-toggle').addEventListener('click', toggleChatbot);
+  document.getElementById('close-chat').addEventListener('click', toggleChatbot);
+};
+

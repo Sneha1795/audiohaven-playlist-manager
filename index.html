@@ -1,27 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AudioHaven Playlist Manager</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AudioHaven 🎵</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <h1>AudioHaven 🎵</h1>
 
-    <div class="chat-section">
-      <input type="text" id="moodInput" placeholder="Enter your mood...">
-      <button onclick="analyzeMood()">Suggest Playlist</button>
-      <div id="suggestion"></div>
-    </div>
-
     <div class="playlist-section">
       <h2>Your Playlist</h2>
-      <ul id="playlist"></ul>
+      <div class="playlist-scroll">
+        <ul id="playlist"></ul>
+      </div>
+      <input type="text" id="songInput" placeholder="Enter song name"/>
+      <button id="addSongBtn">Add Song</button>
+    </div>
+  </div>
 
-      <input type="text" id="songInput" placeholder="Enter song name">
-      <button onclick="addSong()">Add Song</button>
+  <!-- Chat toggle -->
+  <div id="chatbot-toggle">💬</div>
+
+  <!-- Chatbot widget -->
+  <div id="chatbot-widget" class="">
+    <div class="chatbot-header">
+      🎙️ AudioBot
+      <span id="close-chat" class="close-button">✖</span>
+    </div>
+    <div class="chatbot-body" id="chatlog"></div>
+    <div class="chatbot-input">
+      <input type="text" id="chatInput" placeholder="Type your mood..." />
+      <button id="chatSendBtn">Send</button>
     </div>
   </div>
 
