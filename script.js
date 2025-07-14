@@ -8,7 +8,6 @@ class Node {
 class CircularLinkedList {
   constructor() {
     this.head = null;
-    this.current = null;
   }
 
   add(song) {
@@ -16,7 +15,6 @@ class CircularLinkedList {
     if (!this.head) {
       this.head = newNode;
       newNode.next = this.head;
-      this.current = newNode;
     } else {
       let temp = this.head;
       while (temp.next !== this.head) {
@@ -25,6 +23,35 @@ class CircularLinkedList {
       temp.next = newNode;
       newNode.next = this.head;
     }
+  }
+
+  remove(songName) {
+    if (!this.head) return;
+
+    let curr = this.head;
+    let prev = null;
+
+    do {
+      if (curr.song.name === songName) {
+        if (curr === this.head) {
+          if (curr.next === this.head) {
+            this.head = null;
+          } else {
+            let temp = this.head;
+            while (temp.next !== this.head) {
+              temp = temp.next;
+            }
+            temp.next = this.head.next;
+            this.head = this.head.next;
+          }
+        } else {
+          prev.next = curr.next;
+        }
+        return;
+      }
+      prev = curr;
+      curr = curr.next;
+    } while (curr !== this.head);
   }
 
   getSongs() {
@@ -38,47 +65,72 @@ class CircularLinkedList {
     return songs;
   }
 
-  nextSong() {
-    if (this.current) {
-      this.current = this.current.next;
-    }
+  toJSON() {
+    return this.getSongs();
   }
 
-  getCurrentSong() {
-    return this.current ? this.current.song : 'None';
+  loadFromJSON(jsonArray) {
+    jsonArray.forEach(song => this.add(song));
   }
 }
 
 const playlist = new CircularLinkedList();
+let currentSongNode = null;
+
+const stored = localStorage.getItem('audiohaven-playlist');
+if (stored) {
+  playlist.loadFromJSON(JSON.parse(stored));
+}
 
 function renderPlaylist() {
   const ul = document.getElementById('playlist');
   ul.innerHTML = '';
   const songs = playlist.getSongs();
+
   songs.forEach(song => {
     const li = document.createElement('li');
-    li.innerText = song;
+    li.innerHTML = `
+      ${song.name}
+      <div class="actions">
+        <button onclick="playSong('${song.link}')" title="Play ▶️">▶️</button>
+        <button onclick="deleteSong('${song.name}')" title="Remove ❌">❌</button>
+      </div>`;
     ul.appendChild(li);
   });
-}
 
-function updateNowPlaying() {
-  const nowPlaying = document.getElementById('nowPlaying');
-  nowPlaying.innerText = playlist.getCurrentSong();
+  localStorage.setItem('audiohaven-playlist', JSON.stringify(playlist.toJSON()));
 }
 
 function addSong() {
   const input = document.getElementById('songInput');
-  const song = input.value.trim();
-  if (song) {
-    playlist.add(song);
+  const songName = input.value.trim();
+  if (songName) {
+    const fakeLink = `https://youtube.com/results?search_query=${encodeURIComponent(songName)}`;
+    playlist.add({ name: songName, link: fakeLink });
     renderPlaylist();
-    updateNowPlaying();
     input.value = '';
   }
 }
 
-// ========== Chatbot Logic ==========
+function deleteSong(name) {
+  playlist.remove(name);
+  renderPlaylist();
+}
+
+function playSong(link) {
+  window.open(link, '_blank');
+}
+
+function nextSong() {
+  if (!playlist.head) return;
+  if (!currentSongNode) {
+    currentSongNode = playlist.head;
+  } else {
+    currentSongNode = currentSongNode.next;
+  }
+  document.getElementById('nowPlaying').innerText = `Now Playing: ${currentSongNode.song.name}`;
+}
+
 function addMessageToChat(role, text) {
   const chat = document.getElementById('chatlog');
   const div = document.createElement('div');
@@ -96,36 +148,41 @@ function handleChat() {
   addMessageToChat('user', msg);
   input.value = '';
 
-  const mood = msg.toLowerCase();
-  let response = '';
+  const lower = msg.toLowerCase();
 
-  if (mood.includes('happy')) {
-    response = '🎶 Playlist: Happy Vibes\n1. Walking on Sunshine\n2. Can’t Stop the Feeling!';
-  } else if (mood.includes('sad')) {
-    response = '🌧 Playlist: Chill Moods\n1. Someone Like You\n2. Fix You';
-  } else if (mood.includes('study') || mood.includes('focus')) {
-    response = '📚 Playlist: Focus Flow\n1. Lofi Beats\n2. Study Chill';
-  } else {
-    response = '🤖 Try: "I feel happy", "I feel sad", or "I want to study".';
+  const responses = {
+    'happy+pop': '🎉 Playlist: Happy Pop\n1. Firework - Katy Perry\n2. Uptown Funk - Bruno Mars',
+    'sad+indie': '🌧 Playlist: Indie Sad\n1. Skinny Love - Bon Iver\n2. I See Fire - Ed Sheeran',
+    'focus+lofi': '📚 Playlist: Study Lofi\n1. Lofi Rain - ChillHop\n2. Homework Beats - Lofi Cafe',
+    'relaxed+jazz': '🍷 Playlist: Chill Jazz\n1. Autumn Leaves - Chet Baker\n2. So What - Miles Davis'
+  };
+
+  let found = false;
+  for (const key in responses) {
+    const [mood, genre] = key.split('+');
+    if (lower.includes(mood) && lower.includes(genre)) {
+      addMessageToChat('bot', responses[key]);
+      found = true;
+      break;
+    }
   }
 
-  addMessageToChat('bot', response);
+  if (!found) {
+    addMessageToChat('bot', '🤖 Try: "I feel happy and like pop", or "I want to focus and listen to lofi".');
+  }
 }
 
-// ========== Chatbot Show/Hide ==========
 function toggleChatbot() {
   const widget = document.getElementById('chatbot-widget');
   widget.classList.toggle('active');
 }
 
-// ========== Event Listeners ==========
 window.onload = () => {
   document.getElementById('addSongBtn').addEventListener('click', addSong);
   document.getElementById('chatSendBtn').addEventListener('click', handleChat);
   document.getElementById('chatbot-toggle').addEventListener('click', toggleChatbot);
   document.getElementById('close-chat').addEventListener('click', toggleChatbot);
-  document.getElementById('nextBtn').addEventListener('click', () => {
-    playlist.nextSong();
-    updateNowPlaying();
-  });
+  document.getElementById('nextSongBtn').addEventListener('click', nextSong);
+  renderPlaylist();
 };
+

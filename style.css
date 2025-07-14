@@ -72,32 +72,19 @@ li {
   border-radius: 10px;
   color: var(--text-dark);
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Now Playing */
-.now-playing-container {
-  margin-top: 30px;
-  text-align: center;
+li .actions {
+  display: flex;
+  gap: 8px;
 }
 
-#nowPlaying {
-  color: var(--deep-blue);
-  font-weight: bold;
-}
-
-#nextBtn {
-  margin-top: 10px;
-  background-color: var(--accent-blue);
-  color: white;
-  padding: 10px 20px;
-  font-size: 1em;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-#nextBtn:hover {
-  background-color: var(--deep-blue);
+li button {
+  padding: 4px 8px;
+  font-size: 0.9em;
 }
 
 /* Chat toggle */
