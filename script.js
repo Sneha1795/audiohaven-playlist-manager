@@ -105,7 +105,7 @@ function addSong() {
   const input = document.getElementById('songInput');
   const songName = input.value.trim();
   if (songName) {
-    const fakeLink = `https://youtube.com/results?search_query=${encodeURIComponent(songName)}`;
+    const fakeLink = `https://open.spotify.com/search/${encodeURIComponent(songName)}`;
     playlist.add({ name: songName, link: fakeLink });
     renderPlaylist();
     input.value = '';
