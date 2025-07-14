@@ -74,6 +74,32 @@ li {
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
+/* Now Playing */
+.now-playing-container {
+  margin-top: 30px;
+  text-align: center;
+}
+
+#nowPlaying {
+  color: var(--deep-blue);
+  font-weight: bold;
+}
+
+#nextBtn {
+  margin-top: 10px;
+  background-color: var(--accent-blue);
+  color: white;
+  padding: 10px 20px;
+  font-size: 1em;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#nextBtn:hover {
+  background-color: var(--deep-blue);
+}
+
 /* Chat toggle */
 #chatbot-toggle {
   position: fixed;

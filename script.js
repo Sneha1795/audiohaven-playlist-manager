@@ -1,4 +1,3 @@
-// ========== Playlist with Circular Linked List ==========
 class Node {
   constructor(song) {
     this.song = song;
@@ -9,6 +8,7 @@ class Node {
 class CircularLinkedList {
   constructor() {
     this.head = null;
+    this.current = null;
   }
 
   add(song) {
@@ -16,6 +16,7 @@ class CircularLinkedList {
     if (!this.head) {
       this.head = newNode;
       newNode.next = this.head;
+      this.current = newNode;
     } else {
       let temp = this.head;
       while (temp.next !== this.head) {
@@ -36,6 +37,16 @@ class CircularLinkedList {
     } while (temp !== this.head);
     return songs;
   }
+
+  nextSong() {
+    if (this.current) {
+      this.current = this.current.next;
+    }
+  }
+
+  getCurrentSong() {
+    return this.current ? this.current.song : 'None';
+  }
 }
 
 const playlist = new CircularLinkedList();
@@ -51,12 +62,18 @@ function renderPlaylist() {
   });
 }
 
+function updateNowPlaying() {
+  const nowPlaying = document.getElementById('nowPlaying');
+  nowPlaying.innerText = playlist.getCurrentSong();
+}
+
 function addSong() {
   const input = document.getElementById('songInput');
   const song = input.value.trim();
   if (song) {
     playlist.add(song);
     renderPlaylist();
+    updateNowPlaying();
     input.value = '';
   }
 }
@@ -107,5 +124,8 @@ window.onload = () => {
   document.getElementById('chatSendBtn').addEventListener('click', handleChat);
   document.getElementById('chatbot-toggle').addEventListener('click', toggleChatbot);
   document.getElementById('close-chat').addEventListener('click', toggleChatbot);
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    playlist.nextSong();
+    updateNowPlaying();
+  });
 };
-
