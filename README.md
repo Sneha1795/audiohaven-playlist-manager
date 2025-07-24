@@ -35,4 +35,11 @@ User inputs mood + genre (e.g., "happy pop").
 
 The bot matches keywords and suggests curated playlists.
 
+##  Future Enhancements
+- **Spotify API Integration:** Fetch real playlists and track metadata (artists, albums) instead of using hardcoded links.  
+- **Enhanced UI & Theme:** Complete front-end redesign with album covers, artist details.  
+- **Drag-and-Drop Reordering:** Allow users to rearrange songs interactively in the playlist.  
+- **Smarter NLP Chatbot:** Use synonym mapping and sentiment detection to better understand natural language inputs.  
+
+
 
