@@ -1,7 +1,7 @@
-## audiohaven-playlist-manager
+# audiohaven-playlist-manager
 A web-based playlist manager built with HTML, CSS, and JavaScript, leveraging Circular Linked Lists for efficient song management. Includes a mood-based chatbot that recommends songs by mapping emotional keywords to predefined playlists.
 
-# Features
+## Features
 Dynamic Playlist Management:
 Add, remove, and reorder songs in real time using a circular linked list.
 
@@ -17,12 +17,12 @@ Songs are saved in localStorage so the playlist stays even after refreshing.
 Quick Song Access:
 Each song has a "play" button linking to its search page on Spotify.
 
-# Tools & Technologies
+## Tools & Technologies
 Frontend: HTML, CSS, JavaScript
 Data Structure: Circular Linked List (custom implementation)
 Other: Basic NLP (keyword matching), Local Storage
 
-# How It Works
+## How It Works
 Playlist Operations:
 
 Songs are stored as nodes in a circular linked list.
