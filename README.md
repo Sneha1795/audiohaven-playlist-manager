@@ -2,20 +2,15 @@
 A web-based playlist manager built with HTML, CSS, and JavaScript, leveraging Circular Linked Lists for efficient song management. Includes a mood-based chatbot that recommends songs by mapping emotional keywords to predefined playlists.
 
 ## Features
-Dynamic Playlist Management:
-Add, remove, and reorder songs in real time using a circular linked list.
+-**Dynamic Playlist Management:** Add, remove, and reorder songs in real time using a circular linked list.
 
-Smart Chatbot Sidebar:
-Interprets user mood (via simple NLP keyword detection) to recommend playlists.
+-**Smart Chatbot Sidebar:** Interprets user mood (via simple NLP keyword detection) to recommend playlists.
 
-Simulated Listening Behavior:
-Uses lightweight rule-based logic to autosuggest songs based on session history.
+-**Simulated Listening Behavior:** Uses lightweight rule-based logic to autosuggest songs based on session history.
 
-Persistent Playlist:
-Songs are saved in localStorage so the playlist stays even after refreshing.
+-**Persistent Playlist:** Songs are saved in localStorage so the playlist stays even after refreshing.
 
-Quick Song Access:
-Each song has a "play" button linking to its search page on Spotify.
+-**Quick Song Access:** Each song has a "play" button linking to its search page on Spotify.
 
 ## Tools & Technologies
 Frontend: HTML, CSS, JavaScript
@@ -41,5 +36,12 @@ The bot matches keywords and suggests curated playlists.
 - **Drag-and-Drop Reordering:** Allow users to rearrange songs interactively in the playlist.  
 - **Smarter NLP Chatbot:** Use synonym mapping and sentiment detection to better understand natural language inputs.  
 
+## Team
+
+This was developed as a group project.
+
+**Team Members:** 
+- [Sneha. R](https://github.com/Sneha1795)  
+- [Chikitha. A](https://github.com/chikitha06)  
 
 
