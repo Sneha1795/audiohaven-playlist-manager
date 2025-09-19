@@ -10,26 +10,56 @@
   <div class="container">
     <h1>AudioHaven 🎵</h1>
 
-    <div class="playlist-section">
-      <h2>Your Playlist</h2>
-      <div class="playlist-scroll">
-        <ul id="playlist"></ul>
-      </div>
-      <input type="text" id="songInput" placeholder="Enter song name"/>
-      <button id="addSongBtn">Add Song</button>
+    <!-- Navigation Tabs -->
+    <div class="tabs">
+      <button class="tab-btn" data-tab="home">Home</button>
+      <button class="tab-btn" data-tab="playlistPage">Playlist</button>
+      <button class="tab-btn" data-tab="artistsPage">Artists/Albums</button>
+    </div>
 
-      <p id="nowPlaying">Now Playing: None</p>
-      <button id="nextSongBtn">▶️ Next Song</button>
+    <!-- Pages -->
+    <div id="home" class="tab-content active">
+      <h2>Welcome to AudioHaven!</h2>
+      <button id="loginBtn">Login with Spotify</button>
+      <p>Check out your current track below:</p>
+      <div class="now-playing">
+        <div class="track-info">
+          <img id="coverArtHome" src="https://via.placeholder.com/100" alt="Cover Art" />
+          <div>
+            <p id="trackTitleHome">Track Name</p>
+            <p id="trackArtistHome">Artist Name</p>
+          </div>
+        </div>
+      </div>
+      <div class="controls">
+        <button id="prevSongBtn">⏮ Prev</button>
+        <button id="playPauseBtn">▶ Play</button>
+        <button id="nextSongBtn">⏭ Next</button>
+      </div>
+
+      <!-- Audio element -->
+      <audio id="audioPlayer" controls style="width:100%; margin-top: 10px;"></audio>
+    </div>
+
+    <div id="playlistPage" class="tab-content">
+      <h2>Your Playlist</h2>
+      <input type="text" id="searchPlaylist" placeholder="Search your playlist..." />
+      <ul id="playlist"></ul>
+      <input type="text" id="songInput" placeholder="Search a song..." />
+      <button id="addSongBtn">Add Song</button>
+    </div>
+
+    <div id="artistsPage" class="tab-content">
+      <h2>Artists / Albums</h2>
+      <p>Feature coming soon! You can browse artists and albums here.</p>
     </div>
   </div>
 
-  <!-- Chat toggle -->
-  <div id="chatbot-toggle">💬</div>
-
-  <!-- Chatbot widget -->
+  <!-- Chatbot bubble -->
   <div id="chatbot-widget">
+    <span id="chatBubble">💬</span>
     <div class="chatbot-header">
-      🎙️ AudioBot
+      🎙 AudioBot
       <span id="close-chat" class="close-button">✖</span>
     </div>
     <div class="chatbot-body" id="chatlog"></div>
@@ -39,6 +69,7 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Use module so ES6 imports work -->
+  <script type="module" src="script.js"></script>
 </body>
 </html>
