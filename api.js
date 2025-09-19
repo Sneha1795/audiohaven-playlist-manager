@@ -1,5 +1,6 @@
 // api.js
-import { CLIENT_ID, REDIRECT_URI, SCOPES } from './config.js';
+import { CLIENT_ID} from './clientconfig.js';
+import { REDIRECT_URI, SCOPES} from './appconfig.js';
 
 // -------------------- PKCE Helpers --------------------
 function generateRandomString(length) {
